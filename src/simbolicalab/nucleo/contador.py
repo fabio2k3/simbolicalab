@@ -43,7 +43,7 @@ class Contador:
         lim = "sin limite" if self.limite is None else f"limite {self.limite}"
         return f"Contador(total = {self._total}, {lim})"
 
-    def medir(algoritmo: Callable[..., Any], *args: Any, limite: int | None = None, **kwargs: Any) -> tuple[Any, Contador]:
-        c = Contador(limite) 
-        resultado = algoritmo(*args, Contador = c, **kwargs) 
-        return resultado, c
+def medir(algoritmo: Callable[..., Any], *args: Any, limite: int | None = None, **kwargs: Any) -> tuple[Any, Contador]:
+    c = Contador(limite) 
+    resultado = algoritmo(*args, Contador = c, **kwargs) 
+    return resultado, c
