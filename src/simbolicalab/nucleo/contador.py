@@ -36,7 +36,7 @@ class Contador:
         return dict(self._por_categoria)
 
     @property
-    def restatne(self) -> int | None:
+    def restante(self) -> int | None:
         return None if self.limite is None else max(self.limite - self._total, 0)
 
     def __repr__(self) -> str:
@@ -45,5 +45,5 @@ class Contador:
 
 def medir(algoritmo: Callable[..., Any], *args: Any, limite: int | None = None, **kwargs: Any) -> tuple[Any, Contador]:
     c = Contador(limite) 
-    resultado = algoritmo(*args, Contador = c, **kwargs) 
+    resultado = algoritmo(*args, contador = c, **kwargs) 
     return resultado, c

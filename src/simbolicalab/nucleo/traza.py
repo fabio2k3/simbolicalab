@@ -15,7 +15,7 @@ class Evento:
 class Traza:
     def __init__(self, maximo: int = 100000) -> None:
         self.maximo = maximo
-        self.eventos = list[Evento] = []
+        self.eventos: list[Evento] = []
         self.truncada = False
 
 

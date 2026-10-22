@@ -19,11 +19,12 @@ class Presupuesto:
 
 @dataclass
 class Resultado:
-    expression: Any
+    expresion: Any
     error: float
     operaciones: int
+    detalle: dict[str, Any] =field(default_factory=dict)
     agotado: bool = False
-    detalle: dict[str, Any]
+    
 
 @runtime_checkable
 class Solver(Protocol):

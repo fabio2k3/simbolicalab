@@ -19,7 +19,7 @@ class SolverMedia:
                 c.tick(1, "lectura")
                 suma += y
             media = suma / len(datos)
-            traza.emitir("medio_calculada", valor = media)
+            traza.emitir("media_calculada", valor = media)
             
             error = 0.0
             for _, y in datos:
@@ -27,7 +27,7 @@ class SolverMedia:
                 error += (y - media) ** 2
             error /= len(datos)
             traza.emitir("error_calculado", valor=error)
-            return Resultado(media, error, c)
+            return Resultado(media, error, c.total)
         
         except PresupuestoAgotado:
             return Resultado(None, math.inf, c.total,agotado=True)
