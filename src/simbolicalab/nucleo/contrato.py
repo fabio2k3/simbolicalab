@@ -1,14 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Protocol, TypeAlias, runtime_checkable
+from typing import Any, Protocol, TYPE_CHECKING, runtime_checkable
 
 from .contador import Contador
 from .traza import Traza
 
-
-Datos: TypeAlias = Any
-Gramatica: TypeAlias = Any
+if TYPE_CHECKING:
+    from ..rs.datos import Datos
+    from ..rs.expresion import Expr
+    from ..rs.gramatica import Gramatica
 
 @dataclass(frozen=True)
 class Presupuesto:
@@ -19,7 +20,7 @@ class Presupuesto:
 
 @dataclass
 class Resultado:
-    expresion: Any
+    expresion: Expr | None
     error: float
     operaciones: int
     detalle: dict[str, Any] =field(default_factory=dict)
