@@ -7,7 +7,7 @@ from ..nucleo.contador import Contador
 from .datos import Datos
 from .expresion import Expr, evaluar
 
-def error_cuadartico_medio(e: Expr, datos: Datos, contador: Contador | None = None) -> float:
+def error_cuadratico_medio(e: Expr, datos: Datos, contador: Contador | None = None) -> float:
     total = 0.0
 
     for x, y in datos:
@@ -27,6 +27,6 @@ def error_relativo_medio(e:Expr, datos: Datos, contador: Contador | None = None)
     return err if math.isfinite(err) else math.inf
 
 METRICAS: dict[str, Callable[[Expr, Datos, Contador | None], float]] = { 
-    "ecm" : error_cuadartico_medio,
+    "ecm" : error_cuadratico_medio,
     "relativo": error_relativo_medio,
 }

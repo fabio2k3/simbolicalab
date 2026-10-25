@@ -9,7 +9,7 @@ KEPLER = Op("*", (Var("a"), Op("sqrt", (Var("a"),))))
 def test_kepler_real_tiene_ocho_planetas_y_cumple_la_ley():
     d = kepler_real()
     assert len(d) == 8 and d.nombre_x == "a"
-    assert error_relativo_medio(KEPLER, d) < 0.005          # < 0.5 % de error relativo medio
+    assert error_relativo_medio(KEPLER, d) < 0.005          
 
 
 def test_sintetico_sin_ruido_cumple_la_ley_exactamente():
@@ -19,7 +19,7 @@ def test_sintetico_sin_ruido_cumple_la_ley_exactamente():
 
 def test_sintetico_con_ruido_se_desvia_en_la_escala_del_ruido():
     d = kepler_sintetico(n=400, ruido=0.02, semilla=3)
-    # el error relativo medio de |N(0, 0.02)| es 0.02 * sqrt(2/pi) ~ 0.016
+    
     assert 0.010 < error_relativo_medio(KEPLER, d) < 0.022
 
 
