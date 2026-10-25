@@ -1,6 +1,3 @@
-"""
-tests/test_expresion.py  —  Fórmulas: tamaño, escritura, evaluación y dominio
-"""
 import math
 
 import pytest
@@ -9,7 +6,7 @@ from simbolicalab.nucleo import Contador
 from simbolicalab.rs import Const, Op, Var, a_cadena, evaluar, tamano
 
 X = Var("x")
-KEPLER = Op("*", (X, Op("sqrt", (X,))))          # x * sqrt(x)
+KEPLER = Op("*", (X, Op("sqrt", (X,))))       
 
 
 def test_tamano_cuenta_nodos():
@@ -25,22 +22,22 @@ def test_a_cadena():
 
 
 def test_evaluar_valores():
-    assert evaluar(KEPLER, {"x": 4.0}) == 8.0           # 4 * sqrt(4)
+    assert evaluar(KEPLER, {"x": 4.0}) == 8.0           
     assert evaluar(Op("-", (Const(1.0), X)), {"x": 5.0}) == -4.0
     assert evaluar(Op("neg", (X,)), {"x": 5.0}) == -5.0
 
 
 def test_igualdad_estructural_y_hash():
     assert Op("sqrt", (X,)) == Op("sqrt", (Var("x"),))
-    assert KEPLER != Op("*", (Op("sqrt", (X,)), X))      # x*sqrt(x) y sqrt(x)*x son DISTINTAS
+    assert KEPLER != Op("*", (Op("sqrt", (X,)), X))      
     assert len({KEPLER, Op("*", (X, Op("sqrt", (X,))))}) == 1
 
 
 @pytest.mark.parametrize("formula, x", [
-    (Op("/", (Const(1.0), X)), 0.0),                     # división por cero
-    (Op("sqrt", (X,)), -1.0),                            # raíz de negativo
-    (Op("log", (X,)), 0.0),                              # log de 0
-    (Op("log", (X,)), -3.0),                             # log de negativo
+    (Op("/", (Const(1.0), X)), 0.0),                     
+    (Op("sqrt", (X,)), -1.0),                            
+    (Op("log", (X,)), 0.0),                              
+    (Op("log", (X,)), -3.0),                           
 ])
 def test_fuera_de_dominio_da_nan(formula, x):
     assert math.isnan(evaluar(formula, {"x": x}))

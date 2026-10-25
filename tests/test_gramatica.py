@@ -1,6 +1,3 @@
-"""
-tests/test_gramatica.py  —  La gramática rechaza definiciones absurdas
-"""
 import pytest
 
 from simbolicalab.rs import Const, Gramatica, Var
@@ -13,12 +10,12 @@ def test_terminales_en_orden_fijo():
 
 
 @pytest.mark.parametrize("kw", [
-    dict(variables=(), constantes=()),                 # sin terminales
-    dict(unarios=("sqrt", "sqrt")),                    # repetido
-    dict(unarios=("+",)),                              # '+' no es unario
-    dict(binarios=("sqrt",)),                          # 'sqrt' no es binario
-    dict(binarios=("^",)),                             # no existe
-    dict(constantes=(float("nan"),)),                  # no finita
+    dict(variables=(), constantes=()),                 
+    dict(unarios=("sqrt", "sqrt")),                    
+    dict(unarios=("+",)),                              
+    dict(binarios=("sqrt",)),                          
+    dict(binarios=("^",)),                         
+    dict(constantes=(float("nan"),)),                  
 ])
 def test_gramaticas_invalidas(kw):
     with pytest.raises(ValueError):
