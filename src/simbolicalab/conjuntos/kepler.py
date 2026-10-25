@@ -19,7 +19,7 @@ PLANETAS : tuple[tuple[str, float, float], ...] = (
 
 LEY = "a * sqrt(a)"
 
-def kelper_real() -> Datos:
+def kepler_real() -> Datos:
     return Datos(
         xs= tuple(a for _,a,_ in PLANETAS),
         ys = tuple(t for _,_, t in PLANETAS),
