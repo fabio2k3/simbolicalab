@@ -39,8 +39,6 @@ def test_salen_por_tamano_no_decreciente():
 
 
 def test_catalan():
-    """Una variable y un solo operador binario: las fórmulas de tamaño 2k+1 son
-    los árboles binarios con k nodos internos, y hay Catalan(k) de ellos."""
     g = Gramatica(variables=("x",), constants=(), unarios=(), binarios=("+",))
     n = contar_por_size(g, 11)
     for k in range(0, 6):
