@@ -25,7 +25,6 @@ def fibonacci_contado(n: int, contador: Contador) -> int:
     for _ in range(n):
         contador.tick(1, "suma")
         contador.tick(costo_suma_bits(a, b), "bits")
-        a = b
-        b = a + b
+        a, b = b, a + b
 
     return a
