@@ -7,7 +7,7 @@ from .gramatica import Gramatica
 
 def enumerar( g: Gramatica, max_tam: int, contador: Contador | None = None) -> Iterator[Expr]:
     c  = contador if contador is not None else Contador()
-    por_size = list[list[Expr]] = []
+    por_size: list[list[Expr]] = [[]]
 
     for s in range(1, max_tam + 1):
         nivel: list[Expr] = []

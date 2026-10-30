@@ -25,7 +25,7 @@ Expr: TypeAlias = Const | Var | Op
 def tamano(e: Expr) -> int:
     match e:
         case Op(_, hijos):
-            return 1 + sum(tamano[h] for h in hijos)
+            return 1 + sum(tamano(h) for h in hijos)
         case _:
             return 1
 
@@ -60,6 +60,6 @@ def evaluar (e: Expr, entorno: Mapping[str, float], contador: Contador | None = 
             args = [evaluar(h, entorno, contador) for h in hijos]
 
             try: 
-                return OPERADORES[nombre].funcion(*args)
+                return OPERADORES[nombre].function(*args)
             except (OverflowError, ZeroDivisionError, ValueError):
                 return math.nan
