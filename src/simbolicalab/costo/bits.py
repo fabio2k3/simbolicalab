@@ -9,7 +9,7 @@ def tamaño_en_bits(n: int) -> int:
         raise ValueError("n debe ser no negativo")
     return max(1, n.bit_length())
 
-def es_primo_contador(n: int, contador: Contador) -> bool:
+def es_primo_contado(n: int, contador: Contador) -> bool:
     if n < 2:
         return False
     d = 2
