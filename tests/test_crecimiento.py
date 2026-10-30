@@ -1,6 +1,3 @@
-"""
-tests/test_crecimiento.py  —  Hasta dónde llega cada costo con más hardware
-"""
 import math
 
 import pytest
@@ -9,7 +6,7 @@ from simbolicalab.costo.crecimiento import (
     COSTOS_CLASICOS, mayor_n, pendientes, razon_media, razones, tabla_hardware,
 )
 
-HORA = 3600 * 10**9      # una hora a 1e9 operaciones por segundo
+HORA = 3600 * 10**9      #
 
 
 def test_mayor_n_es_el_borde_exacto():
@@ -41,16 +38,15 @@ def test_mil_veces_mas_rapido_segun_la_clase_de_costo():
     cubico = mayor_n(COSTOS_CLASICOS["n^3"], 1000 * base) / mayor_n(COSTOS_CLASICOS["n^3"], base)
     expo = mayor_n(COSTOS_CLASICOS["2^n"], 1000 * base) - mayor_n(COSTOS_CLASICOS["2^n"], base)
     assert lineal == pytest.approx(1000)
-    assert cuadratico == pytest.approx(math.sqrt(1000), rel=0.01)       # ≈ 31.6
-    assert cubico == pytest.approx(10, rel=0.01)                        # ∛1000
-    assert expo == 10                                                   # ≈ log2(1000)
+    assert cuadratico == pytest.approx(math.sqrt(1000), rel=0.01)       
+    assert cubico == pytest.approx(10, rel=0.01)                        
+    assert expo == 10                                                  
 
 
 def test_datos_que_crecen_castigan_al_cuadratico():
-    """Hardware 10x y datos 10x: el lineal tarda lo mismo, el cuadrático 10 veces más."""
     n, k = 10_000, 10
-    assert (k * n) / k == n                          # lineal: mismo tiempo
-    assert ((k * n) ** 2) / k == k * n ** 2          # cuadrático: 10x más
+    assert (k * n) / k == n                       
+    assert ((k * n) ** 2) / k == k * n ** 2         
 
 
 def test_pendientes_de_un_polinomio_tienden_a_su_grado():
@@ -66,12 +62,10 @@ def test_las_razones_de_un_exponencial_son_su_base():
 
 def test_la_pendiente_de_un_exponencial_no_se_estabiliza():
     p = pendientes([(k, 2 ** k) for k in range(2, 20)])
-    assert p == sorted(p) and p[-1] > 3 * p[0]       # sigue creciendo: no hay grado fijo
+    assert p == sorted(p) and p[-1] > 3 * p[0]       
 
 
 def test_n_log_n_se_parece_a_n_pero_no_es_n():
-    """Advertencia sobre la heurística: la pendiente de n·log n ronda 1.1 a 1.2,
-    pero eso solo no distingue n·log n de n^1.1."""
     p = pendientes([(n, n * math.log2(n)) for n in (10 ** 3, 10 ** 6)])
     assert 1.05 < p[0] < 1.25
 
