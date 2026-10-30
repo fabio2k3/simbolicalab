@@ -38,7 +38,7 @@ def tabla_hardware(costos: dict[str, Costo] = COSTOS_CLASICOS,ops_por_segundo: f
     segundos: float = 3600, factores: Sequence[int] = (1, 10, 1000)) -> dict[str, list[int]]:
 
     base = ops_por_segundo * segundos
-    return {nombre : [mayor_n(f, base * k) for  k in factores] for nombre, f in costos.items}
+    return {nombre : [mayor_n(f, base * k) for  k in factores] for nombre, f in costos.items()}
 
 def pendientes(puntos: Sequence[tuple[float, float]]) -> list[float]:
     return [ (math.log(c2) - math.log(c1)) / (math.log(n2) - math.log(n1)) for (n1, c1), (n2, c2) in zip(puntos, puntos[1:])]
