@@ -4,7 +4,7 @@ from .gramatica import Gramatica
 
 def contar_por_size(g: Gramatica, max_tam: int) -> list[int]:
     t = g.n_terminales
-    u = len(g.unarios), 
+    u = len(g.unarios)
     b = len(g.binarios) 
 
     n = [0]* (max_tam + 1)

@@ -5,6 +5,7 @@ from .espacio import contar_por_size, costo_fuerza_bruta, mayor_size_alcanzable
 from .gramatica import Gramatica
 from .expresion import Const, Const, Op, Var, a_cadena, evaluar, tamano
 from .operadores import OPERADORES
+from .invariantes import InvarianteViolado, bien_formada, cota_de_perdida, representante_de, verificar_enumeracion, violaciones_dedup
 
 from .deduplicacion import (
     deduplicar_cuadratico, deduplicar_exacta, deduplicar_rejilla, firma, todas_distintas,
@@ -15,5 +16,6 @@ __all__ = [
     "contar_por_size", "costo_fuerza_bruta", "mayor_size_alcanzable", "Gramatica",
     "Const", "Const", "Op", "Var", "a_cadena", "evaluar", "tamano",
     "OPERADORES" , 
-    "deduplicar_cuadratico", "deduplicar_exacta", "deduplicar_rejilla", "firma", "todas_distintas"
+    "deduplicar_cuadratico", "deduplicar_exacta", "deduplicar_rejilla", "firma", "todas_distintas",
+    "InvarianteViolado", "bien_formada", "cota_de_perdida", "representante_de", "verificar_enumeracion", "violaciones_dedup"
 ]

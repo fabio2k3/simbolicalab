@@ -7,7 +7,7 @@ from typing import Mapping, TypeAlias
 from ..nucleo.contador import Contador
 from .operadores import OPERADORES
 
-@dataclass(frozen=False, slots=True)
+@dataclass(frozen=True, slots=True)
 class Const:
     valor: float
 
