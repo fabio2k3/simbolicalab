@@ -37,7 +37,7 @@ class ArregloDinamico:
         return self._bloque[: self._tamano]
             
     def potencial(self) -> float:
-        t, c = self._tamano , self.potencial
+        t, c = self._tamano , self.capacidad
         return 2 * t - c if 2 * t >= c else c / 2 - t
     
     def credito(self) -> int:
