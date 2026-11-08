@@ -22,7 +22,7 @@ def error_relativo_medio(e:Expr, datos: Datos, contador: Contador | None = None)
     total = 0.0
 
     for x, y in datos:
-        total += abs(evaluar(e, {datos.nombre_x: x}, contador) - y)
+        total += abs(evaluar(e, {datos.nombre_x: x}, contador) - y) / abs(y)
     err = total / len(datos)
     return err if math.isfinite(err) else math.inf
 
