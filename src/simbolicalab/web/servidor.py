@@ -1,3 +1,4 @@
+"""Servidor local sin dependencias: sirve la interfaz y expone la API. Uso: python -m simbolicalab.web"""
 from __future__ import annotations
 
 import json, math
@@ -39,7 +40,7 @@ class Manejador(BaseHTTPRequestHandler):
             params = json.loads(self.rfile.read(largo) or b"{}")
             cuerpo = json.dumps(_limpio(API[nombre](params)), ensure_ascii=False).encode()
             self._enviar(200, cuerpo, "application/json; charset=utf-8")
-        except Exception as e:  
+        except Exception as e:  # el error llega a la interfaz en vez de perderse en la consola
             self._enviar(400, json.dumps({"error": f"{type(e).__name__}: {e}"}).encode(), "application/json")
 
     def log_message(self, *a):

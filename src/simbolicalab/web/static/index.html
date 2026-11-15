@@ -2,28 +2,36 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SimbólicaLab · Tema 1</title>
 <style>
-:root{--bg:#f2f5f8;--panel:#fff;--ink:#14202b;--mut:#5a6b7a;--line:#d5dde5;--acc:#2447d6;--accbg:#e6ecff;--ok:#12805c;--bad:#c2255c;--code:#eef2f6;color-scheme:light}
-@media(prefers-color-scheme:dark){:root{--bg:#0e1620;--panel:#162230;--ink:#e6edf3;--mut:#93a4b4;--line:#2a3a4a;--acc:#7b99ff;--accbg:#1d2c52;--ok:#4fd1a1;--bad:#ff7aa8;--code:#0e1923;color-scheme:dark}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
-.w{max-width:1000px;margin:0 auto;padding:20px 16px 60px}h1{font-size:2.2rem;margin:6px 0;letter-spacing:-.02em}h2{margin:0 0 4px}
-.s{color:var(--mut);max-width:68ch;margin:0 0 14px}
-nav{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px}nav button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 12px;border-radius:8px;font:inherit;cursor:pointer}
-nav button[aria-selected=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
-.lab{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
-.ctl{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end;margin:12px 0}label{display:flex;flex-direction:column;font-size:.85rem;color:var(--mut);gap:4px}
-select,input{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:150px}
-.go{font:inherit;padding:8px 16px;border-radius:8px;border:0;background:var(--acc);color:#fff;cursor:pointer}
-:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-h3{font-size:1rem;margin:18px 0 4px}.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.88rem}
-th,td{text-align:right;padding:5px 10px;border-bottom:1px solid var(--line);white-space:nowrap}th:first-child,td:first-child{text-align:left}
-.kv{display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;background:var(--code);padding:12px 14px;border-radius:8px;font-size:.9rem}.kv b{font-weight:600}
-.bars{display:flex;align-items:flex-end;gap:2px;height:70px;margin:6px 0}.bars i{flex:1;background:var(--acc);min-width:3px;border-radius:2px 2px 0 0}
-.bad{color:var(--bad)}.ok{color:var(--ok)}.err{background:var(--code);color:var(--bad);padding:10px;border-radius:8px}
-details{margin-top:14px;border-top:1px solid var(--line);padding-top:8px}summary{cursor:pointer;color:var(--acc)}
-</style></head><body><div class="w">
-<h1>SimbólicaLab · Tema 1</h1>
-<p class="s">Cada botón ejecuta tu código de <code>simbolicalab</code> en el servidor y muestra el resultado tal cual. Si cambias el código, recarga y vuelve a ejecutar.</p>
-<nav id="tabs" role="tablist"></nav><section class="lab" id="lab"></section></div>
+:root{--bg:#f4f6fb;--panel:#fff;--ink:#17202e;--mut:#64748b;--line:#e2e8f0;--acc:#4f46e5;--acc2:#06b6d4;--accbg:#eef2ff;--ok:#059669;--bad:#e11d48;--code:#f1f5f9;--sh:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0b1020;--panel:#131a2e;--ink:#e8ecf5;--mut:#94a3b8;--line:#243049;--acc:#818cf8;--acc2:#22d3ee;--accbg:#1b2347;--ok:#34d399;--bad:#fb7185;--code:#0d1426;--sh:0 8px 24px rgba(0,0,0,.35);color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,#312e81,#4f46e5 55%,#0891b2);color:#fff;padding:30px 16px 64px}
+.w{max-width:1040px;margin:0 auto;padding:0 16px}header .w{padding:0}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);margin:0 0 4px;letter-spacing:-.02em}header p{margin:0;opacity:.85;max-width:62ch}
+h2{margin:0 0 4px;font-size:1.45rem}h3{font-size:.8rem;margin:22px 0 8px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut)}
+.s{color:var(--mut);max-width:70ch;margin:0 0 14px}
+nav{display:flex;gap:8px;overflow-x:auto;margin:-34px 0 16px;padding:4px 2px 8px}
+nav button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:9px 15px;border-radius:999px;font:inherit;font-size:.9rem;cursor:pointer;box-shadow:var(--sh);transition:transform .12s}
+nav button:hover{transform:translateY(-1px)}nav button[aria-selected=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.lab{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--sh)}
+.tag{display:inline-block;font-size:.75rem;font-weight:600;color:var(--acc);background:var(--accbg);padding:2px 10px;border-radius:999px;margin-bottom:8px}
+.ctl{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end;margin:16px 0;padding:14px;background:var(--code);border-radius:12px}
+label{display:flex;flex-direction:column;font-size:.78rem;color:var(--mut);gap:4px;font-weight:600}
+select,input{font:inherit;font-weight:400;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);width:156px}
+.go{font:inherit;font-weight:600;padding:9px 22px;border-radius:10px;border:0;background:linear-gradient(120deg,var(--acc),var(--acc2));color:#fff;cursor:pointer;box-shadow:0 4px 12px rgba(79,70,229,.35)}
+.go:disabled{opacity:.55;cursor:wait}:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;font-size:.86rem}
+th{background:var(--code);color:var(--mut);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+th,td{text-align:right;padding:7px 12px;border-bottom:1px solid var(--line);white-space:nowrap}th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:0}tbody tr:nth-child(even) td,tr:nth-child(even) td{background:color-mix(in srgb,var(--code) 55%,transparent)}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.kv>div{background:var(--code);border-radius:10px;padding:10px 12px;border-left:3px solid var(--acc)}.kv span{display:block;font-size:.72rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}.kv b{font-size:1.02rem;word-break:break-word}
+.bars{display:flex;align-items:flex-end;gap:3px;height:90px;padding:8px;background:var(--code);border-radius:10px}.bars i{flex:1;background:linear-gradient(var(--acc2),var(--acc));min-width:4px;border-radius:3px 3px 0 0}
+.bad{color:var(--bad);font-weight:600}.ok{color:var(--ok);font-weight:600}.err{background:color-mix(in srgb,var(--bad) 12%,var(--panel));color:var(--bad);padding:12px 14px;border-radius:10px;border:1px solid var(--bad)}
+details{margin-top:20px;border-top:1px solid var(--line);padding-top:10px}summary{cursor:pointer;color:var(--acc);font-weight:600}
+footer{text-align:center;color:var(--mut);font-size:.8rem;padding:24px 0}
+</style></head><body><header><div class="w"><h1>SimbólicaLab · Tema 1</h1><p>Diseño y Análisis de Algoritmos aplicado a la regresión simbólica. Cada botón ejecuta tu código real de <code>simbolicalab</code>.</p></div></header>
+<div class="w"><nav id="tabs" role="tablist"></nav><section class="lab" id="lab"></section><footer>SimbólicaLab · interfaz de pruebas · el diseño es provisional</footer></div>
 <script>
 const DS=[{k:"conjunto",l:"Datos",t:"sel",o:[["real","Kepler real (8 planetas)"],["sintetico","Kepler sintético"]]},{k:"n",l:"n (sintético)",v:30},{k:"ruido",l:"Ruido (sintético)",v:0.02}];
 const LABS=[
@@ -55,7 +63,7 @@ const title=k=>k.replace(/_/g," ");
 function render(o){let h="";for(const [k,v] of Object.entries(o)){
  if(Array.isArray(v)&&v.length&&typeof v[0]=="object"){const c=Object.keys(v[0]);h+=`<h3>${title(k)}</h3><div class="tbl"><table><tr>${c.map(x=>`<th>${title(x)}</th>`).join("")}</tr>${v.map(r=>`<tr>${c.map(x=>`<td>${fmt(r[x])}</td>`).join("")}</tr>`).join("")}</table></div>`}
  else if(Array.isArray(v)&&typeof v[0]=="number"){const m=Math.max(...v,1);h+=`<h3>${title(k)}</h3><div class="bars">${v.map(x=>`<i style="height:${100*x/m}%" title="${x}"></i>`).join("")}</div>`}
- else if(v&&typeof v=="object"&&!Array.isArray(v)){h+=`<h3>${title(k)}</h3><div class="kv">${Object.entries(v).map(([a,b])=>`<span>${title(a)}</span><b>${fmt(b)}</b>`).join("")}</div>`}}
+ else if(v&&typeof v=="object"&&!Array.isArray(v)){h+=`<h3>${title(k)}</h3><div class="kv">${Object.entries(v).map(([a,b])=>`<div><span>${title(a)}</span><b>${fmt(b)}</b></div>`).join("")}</div>`}}
  return h}
 function pick(l){cur=l;location.hash=l.id;[...$("tabs").children].forEach(b=>b.setAttribute("aria-selected",b.dataset.id==l.id));
  $("lab").innerHTML=`<h2>${l.h}</h2><p class="s">${l.tag} · ${l.d}</p><div class="ctl">${l.f.map(f=>`<label>${f.l}${f.t=="sel"?`<select data-k="${f.k}">${f.o.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("")}</select>`:`<input data-k="${f.k}" value="${f.v}" ${f.t=="txt"?"data-txt=1":""}>`}</label>`).join("")}<button class="go" id="run">Ejecutar</button></div><div id="out"></div><details><summary>Versión formal</summary><p class="s">${l.x}</p></details>`;
