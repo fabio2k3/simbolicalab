@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SimbólicaLab · Tema 1</title>
+<style>
+:root{--bg:#f2f5f8;--panel:#fff;--ink:#14202b;--mut:#5a6b7a;--line:#d5dde5;--acc:#2447d6;--accbg:#e6ecff;--ok:#12805c;--bad:#c2255c;--code:#eef2f6;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1620;--panel:#162230;--ink:#e6edf3;--mut:#93a4b4;--line:#2a3a4a;--acc:#7b99ff;--accbg:#1d2c52;--ok:#4fd1a1;--bad:#ff7aa8;--code:#0e1923;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+.w{max-width:1000px;margin:0 auto;padding:20px 16px 60px}h1{font-size:2.2rem;margin:6px 0;letter-spacing:-.02em}h2{margin:0 0 4px}
+.s{color:var(--mut);max-width:68ch;margin:0 0 14px}
+nav{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px}nav button{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 12px;border-radius:8px;font:inherit;cursor:pointer}
+nav button[aria-selected=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.lab{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.ctl{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end;margin:12px 0}label{display:flex;flex-direction:column;font-size:.85rem;color:var(--mut);gap:4px}
+select,input{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:150px}
+.go{font:inherit;padding:8px 16px;border-radius:8px;border:0;background:var(--acc);color:#fff;cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+h3{font-size:1rem;margin:18px 0 4px}.tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:right;padding:5px 10px;border-bottom:1px solid var(--line);white-space:nowrap}th:first-child,td:first-child{text-align:left}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;background:var(--code);padding:12px 14px;border-radius:8px;font-size:.9rem}.kv b{font-weight:600}
+.bars{display:flex;align-items:flex-end;gap:2px;height:70px;margin:6px 0}.bars i{flex:1;background:var(--acc);min-width:3px;border-radius:2px 2px 0 0}
+.bad{color:var(--bad)}.ok{color:var(--ok)}.err{background:var(--code);color:var(--bad);padding:10px;border-radius:8px}
+details{margin-top:14px;border-top:1px solid var(--line);padding-top:8px}summary{cursor:pointer;color:var(--acc)}
+</style></head><body><div class="w">
+<h1>SimbólicaLab · Tema 1</h1>
+<p class="s">Cada botón ejecuta tu código de <code>simbolicalab</code> en el servidor y muestra el resultado tal cual. Si cambias el código, recarga y vuelve a ejecutar.</p>
+<nav id="tabs" role="tablist"></nav><section class="lab" id="lab"></section></div>
+<script>
+const DS=[{k:"conjunto",l:"Datos",t:"sel",o:[["real","Kepler real (8 planetas)"],["sintetico","Kepler sintético"]]},{k:"n",l:"n (sintético)",v:30},{k:"ruido",l:"Ruido (sintético)",v:0.02}];
+const LABS=[
+{id:"oraculo",n:"1 · Oráculo",tag:"C1–C2",h:"Enumerador de fuerza bruta",d:"SolverFuerzaBruta con el invariante vigilado, gramática editable (cualquier operador de OPERADORES), SolverMedia como referencia, frente de Pareto lineal contra cuadrático y mejor_formula con y sin omitir candidatas (hasta tamaño 6).",
+ f:[...DS,{k:"max_tam",l:"Tamaño máximo (≤8)",v:5},{k:"metrica",l:"Métrica",t:"sel",o:[["ecm","ECM"],["relativo","Relativo"]]},{k:"presupuesto",l:"Presupuesto (ops)",v:3000000},{k:"constantes",l:"Constantes",v:"1,2",t:"txt"},{k:"unarios",l:"Unarios (sqrt,log,exp,neg)",v:"sqrt",t:"txt"},{k:"binarios",l:"Binarios",v:"+,-,*,/",t:"txt"}],
+ x:"El costo se mide en ticks de Contador, no en segundos. Si el presupuesto se agota, el solver devuelve lo mejor visto hasta ahí con presupuesto_agotado = true. La columna costo_fuerza_bruta es la predicción de espacio.costo_fuerza_bruta."},
+{id:"bits",n:"2 · Bits y costo",tag:"C1",h:"Tamaño de la entrada en bits",d:"Primalidad por división, mochila, tabla de hardware, cuadrados repetidos y Fibonacci (costo unitario frente a bits), suma_contada con y sin fusión y tiempo de la división de prueba.",
+ f:[{k:"max_bits",l:"Bits máximos (≤36)",v:32},{k:"n_suma",l:"Largo del arreglo (suma)",v:100}],
+ x:"Primalidad: Θ(√n) = Θ(2^(b/2)) divisiones, exponencial en b. Mochila: Θ(nW) celdas, lineal en el valor W y por tanto exponencial en sus bits (pseudopolinomial)."},
+{id:"dedup",n:"3 · Correctitud",tag:"C3",h:"Invariantes del enumerador y la deduplicación",d:"verificar_enumeracion con un enumerador correcto y uno defectuoso, violaciones_dedup, representante_de, cota_de_perdida, bien_formada y tasa_de_deteccion de las variantes defectuosas frente a la cuadrática.",
+ f:[...DS,{k:"max_tam",l:"Tamaño máximo (≤5)",v:4},{k:"eps",l:"eps",v:0.000001},{k:"pruebas",l:"Pruebas (detección)",v:500},{k:"n_firmas",l:"Firmas por prueba",v:6},{k:"span",l:"Rango (en eps)",v:4},{k:"semilla_pruebas",l:"Semilla de pruebas",v:0}],
+ x:"Dos propiedades de K: separación (los representantes están a más de eps entre sí) y cobertura (cada firma descartada está a ≤ eps de un representante anterior). La rejilla hace muchas más comparaciones que la cuadrática en 8 dimensiones: cada firma mira 3^8 celdas."},
+{id:"amortizado",n:"4 · Amortizado",tag:"C4",h:"Potencial en cuatro estructuras",d:"Contador binario en máquina de Turing, arreglo dinámico con distintas reducciones, y splay frente a subir a la raíz con el lema de acceso.",
+ f:[{k:"k",l:"Incrementos (≤5000)",v:500},{k:"factor",l:"Factor de crecimiento",v:2},{k:"reduccion",l:"Reducción",t:"sel",o:[["mitad","mitad"],["cuarto","cuarto"],["nunca","nunca"]]},{k:"n_splay",l:"Claves del splay (≤200)",v:100}],
+ x:"Con reducción «mitad», alternar append y pop justo en el límite de la capacidad provoca un redimensionamiento en cada operación; con «cuarto» no. La suma amortizada solo vale si suma_valida es true (el potencial no terminó por debajo del inicial)."},
+{id:"cotas",n:"5 · Cotas",tag:"C5",h:"Información y adversario",d:"Peor caso exacto frente a ⌈log₂ n!⌉, árboles de decisión de inserción y mergesort, adversario, ordenar por conteo frente a comparaciones, identificación de la ley con DisenoDeExperimento y x que separan las candidatas.",
+ f:[...DS,{k:"max_tam",l:"Tamaño máximo (≤4)",v:4},{k:"n_cand",l:"Candidatas del adversario (≤64)",v:8},{k:"maximo",l:"Clave máxima (conteo)",v:64}],
+ x:"Cualquier algoritmo que deja una candidata sin consultar pierde: el adversario le pone ahí el mínimo. Por eso los n valores hay que evaluarlos todos."},
+{id:"modelos",n:"6 · Modelos",tag:"C1",h:"Máquina de Turing, RAM y notación asintótica",d:"MaquinaTuring con traza paso a paso, palíndromo en Turing frente a RAM, incrementos en Turing, contraejemplos de O y Ω, razones y pendientes de crecimiento.",
+ f:[{k:"maquina",l:"Máquina",t:"sel",o:[["palindromo","Palíndromo"],["incremento","Incremento binario"]]},{k:"entrada",l:"Entrada (0/1)",v:"0110",t:"txt"},{k:"f",l:"f(n)",t:"sel",o:[["n^2","n^2"],["n log n","n log n"],["n","n"],["n^3","n^3"],["2^n","2^n"]]},{k:"g",l:"g(n)",t:"sel",o:[["n log n","n log n"],["n^2","n^2"],["n","n"],["n^3","n^3"],["2^n","2^n"]]},{k:"c",l:"Constante c",v:1},{k:"n0",l:"n0",v:2},{k:"hasta",l:"Buscar hasta (≤1000)",v:500}],
+ x:"Un contraejemplo de O es el primer n ≥ n0 con f(n) > c·g(n). null significa que no hay ninguno hasta el límite, lo cual no demuestra la cota, solo no la refuta. La RAM compara la mitad de los símbolos; la máquina de Turing recorre la cinta de ida y vuelta, así que cambia el exponente."},
+{id:"estructuras",n:"7 · UF y simetrías",tag:"C4",h:"Union-Find y clases de fórmulas",d:"UnionFind con cinco configuraciones (rango, compresión, rango en empate) y verificar_propiedades, y clases_por_conmutatividad sobre las fórmulas enumeradas.",
+ f:[...DS,{k:"max_tam",l:"Tamaño máximo (≤5)",v:4},{k:"patron",l:"Uniones",t:"sel",o:[["cadena","Cadena adversaria"],["aleatorio","Aleatorias"]]},{k:"semilla",l:"Semilla",v:0}],
+ x:"P1: el rango crece hacia la raíz. P2: un árbol de rango r tiene al menos 2^r nodos. P3: hay a lo sumo n/2^r nodos de rango r. Apagar el rango o su actualización en empates viola P1; la compresión por sí sola no garantiza el log n por unión."}];
+const $=id=>document.getElementById(id);let cur=LABS[0];
+LABS.forEach(l=>{const b=document.createElement("button");b.textContent=l.n;b.dataset.id=l.id;b.setAttribute("role","tab");b.onclick=()=>pick(l);$("tabs").append(b)});
+const fmt=v=>v===null||v===undefined?"—":typeof v=="boolean"?`<span class="${v?"ok":"bad"}">${v?"sí":"no"}</span>`:typeof v=="number"?(Number.isInteger(v)?v.toLocaleString("es"):Math.abs(v)<1e-3||Math.abs(v)>=1e6?v.toExponential(3):+v.toFixed(4)):String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const title=k=>k.replace(/_/g," ");
+function render(o){let h="";for(const [k,v] of Object.entries(o)){
+ if(Array.isArray(v)&&v.length&&typeof v[0]=="object"){const c=Object.keys(v[0]);h+=`<h3>${title(k)}</h3><div class="tbl"><table><tr>${c.map(x=>`<th>${title(x)}</th>`).join("")}</tr>${v.map(r=>`<tr>${c.map(x=>`<td>${fmt(r[x])}</td>`).join("")}</tr>`).join("")}</table></div>`}
+ else if(Array.isArray(v)&&typeof v[0]=="number"){const m=Math.max(...v,1);h+=`<h3>${title(k)}</h3><div class="bars">${v.map(x=>`<i style="height:${100*x/m}%" title="${x}"></i>`).join("")}</div>`}
+ else if(v&&typeof v=="object"&&!Array.isArray(v)){h+=`<h3>${title(k)}</h3><div class="kv">${Object.entries(v).map(([a,b])=>`<span>${title(a)}</span><b>${fmt(b)}</b>`).join("")}</div>`}}
+ return h}
+function pick(l){cur=l;location.hash=l.id;[...$("tabs").children].forEach(b=>b.setAttribute("aria-selected",b.dataset.id==l.id));
+ $("lab").innerHTML=`<h2>${l.h}</h2><p class="s">${l.tag} · ${l.d}</p><div class="ctl">${l.f.map(f=>`<label>${f.l}${f.t=="sel"?`<select data-k="${f.k}">${f.o.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("")}</select>`:`<input data-k="${f.k}" value="${f.v}" ${f.t=="txt"?"data-txt=1":""}>`}</label>`).join("")}<button class="go" id="run">Ejecutar</button></div><div id="out"></div><details><summary>Versión formal</summary><p class="s">${l.x}</p></details>`;
+ $("run").onclick=run}
+async function run(){const p={};document.querySelectorAll("[data-k]").forEach(e=>p[e.dataset.k]=e.tagName=="SELECT"?e.value:(e.dataset.txt||isNaN(+e.value)?e.value:+e.value));
+ $("out").innerHTML="<p class='s'>Ejecutando…</p>";$("run").disabled=true;
+ try{const r=await fetch("/api/"+cur.id,{method:"POST",body:JSON.stringify(p)}),j=await r.json();$("out").innerHTML=r.ok?render(j):`<div class="err">${j.error}</div>`}
+ catch(e){$("out").innerHTML=`<div class="err">No hay conexión con el servidor o respuesta inválida: ${e.message}</div>`}$("run").disabled=false}
+pick(LABS.find(l=>l.id==location.hash.slice(1))||LABS[0]);
+</script></body></html>
