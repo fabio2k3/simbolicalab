@@ -34,7 +34,7 @@ def kepler_sintetico(n: int = 30, ruido: float = 0.02, semilla: int = 0) -> Dato
     if ruido < 0:
         raise ValueError("el ruido no pueder ser negativo")
 
-    rng = random.Random()
+    rng = random.Random(semilla)
     a_s = sorted(math.exp(rng.uniform(math.log(0.3), math.log(40.0))) for _ in range(n))
 
     ts = [a ** 1.5 * (1.0 + rng.gauss(0.0, ruido)) for a in a_s]
