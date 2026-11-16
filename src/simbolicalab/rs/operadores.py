@@ -13,6 +13,12 @@ def _sqrt(a: float) -> float:
 def _log(a: float) -> float:
     return math.log(a) if a > 0 else math.nan
 
+def _sin(a: float) -> float:
+    return math.sin(a) if math.isfinite(a) else math.nan
+
+def _cos(a: float) -> float:
+    return math.cos(a) if math.isfinite(a) else math.nan
+
 def _exp(a: float) -> float:
     try:
         return math.exp(a)
@@ -36,4 +42,6 @@ OPERADORES: dict[str, Operador] = {
     "log": Operador("log", 1, _log),
     "exp": Operador("exp", 1, _exp),
     "neg": Operador("neg", 1, lambda a: -a),
+    "sin": Operador("sin", 1, _sin),
+    "cos": Operador("cos", 1, _cos),
 }
