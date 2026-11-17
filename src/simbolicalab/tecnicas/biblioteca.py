@@ -1,6 +1,4 @@
-"""Biblioteca de términos candidatos: los representantes por firma del PD, como columnas para el ajuste lineal."""
 from __future__ import annotations
-
 import math
 from dataclasses import dataclass
 from typing import Sequence
@@ -9,8 +7,8 @@ from ..nucleo.contador import Contador
 from ..rs.datos import Datos
 from ..rs.expresion import Expr, tamano
 from ..rs.gramatica import Gramatica
-from .matroides import MatroideLineal, clases_paralelas, goloso_base_lineal
-from .pd_tamano import TablaPD, tabla_pd
+from .matroides import MatroideLineal, clases_paralelas, greedy_base_lineal
+from .dp_tamano import TablaPD, tabla_pd
 
 REDUCCIONES = ("ninguna", "paralelas", "base")
 
@@ -19,7 +17,7 @@ REDUCCIONES = ("ninguna", "paralelas", "base")
 class Termino:
     expr: Expr
     columna: tuple[float, ...]
-    costo: int                      # tamaño del árbol: la complejidad del término
+    costo: int                   
 
 
 def biblioteca_de_terminos(datos: Datos, g: Gramatica, max_tam: int, cifras: int | None = None, contador: Contador | None = None) -> tuple[list[Termino], TablaPD]:
@@ -41,5 +39,5 @@ def reducir_biblioteca(terminos: Sequence[Termino], modo: str = "paralelas", tol
     if modo == "paralelas":
         return sorted(min(c, key=lambda i: (terminos[i].costo, i)) for c in clases_paralelas(cols))
     
-    r = goloso_base_lineal(MatroideLineal(cols, tol, contador), [float(t.costo) for t in terminos])
+    r = greedy_base_lineal(MatroideLineal(cols, tol, contador), [float(t.costo) for t in terminos])
     return sorted(r.elegidos)
