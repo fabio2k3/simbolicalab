@@ -8,13 +8,13 @@ from ..rs.datos import Datos
 from ..rs.error import METRICAS
 from ..rs.expresion import a_cadena
 from ..rs.gramatica import Gramatica
-from ..tecnicas.pd_tamano import tabla_pd
+from ..tecnicas.dp_tamano import tabla_pd
 
 
-class SolverPD:
+class SolverDP:
     """Mejor expresión por tamaño con un representante por firma. ancho=None es exacto; ancho=w poda por error."""
 
-    nombre = "pd_tamano"
+    nombre = "dp_tamano"
 
     def __init__(self, max_tam: int, metrica: str = "ecm", cifras: int | None = None, ancho: int | None = None,
                  vigilar: bool = False) -> None:
