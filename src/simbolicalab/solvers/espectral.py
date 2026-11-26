@@ -1,16 +1,15 @@
 from __future__ import annotations
 
+import math
 from ..conjuntos.oscilador import es_rejilla_uniforme
-from ..nucleo.contador import PresupuestoAgotado
-from ..nucleo.contrato import Presupuesto, Resultado
-from ..nucleo.traza import TRAZA_NULA, Traza
 from ..rs.datos import Datos
 from ..rs.expresion import Const, Expr, Op, Var, a_cadena
 from ..rs.gramatica import Gramatica
+from ..nucleo.contador import PresupuestoAgotado
+from ..nucleo.contrato import Presupuesto, Resultado
+from ..nucleo.traza import TRAZA_NULA, Traza
 from ..tecnicas.ajuste_lineal import minimos_cuadrados
 from ..tecnicas.analisis_espectral import espectro, picos, refinar_jacobsen, refinar_por_ajuste
-
-import math
 
 REFINADOS = ("ninguno", "jacobsen", "ajuste")
 
@@ -23,14 +22,16 @@ def _seno_coseno(omega: float, t: str) -> tuple[Expr, Expr]:
 class SolverEspectral:
     nombre = "espectral"
 
-    def __init__(self, m: int = 1, refinar: str = "ajuste", quitar_media: bool = True, relleno: int = 1) -> None:
+    def __init__(self, m: int = 1, refinar: str = "ajuste", quitar_media: bool = True, relleno: int = 1, min_ciclos: float = 2.0) -> None:
         if m < 1:
             raise ValueError("m debe ser al menos 1")
         if refinar not in REFINADOS:
             raise ValueError(f"refinado desconocido: {refinar!r}; opciones: {REFINADOS}")
         if relleno < 1:
             raise ValueError("relleno debe ser al menos 1")
-        self.m, self.refinar, self.quitar_media, self.relleno = m, refinar, quitar_media, relleno
+        if min_ciclos < 0:
+            raise ValueError("min_ciclos no puede ser negativo")
+        self.m, self.refinar, self.quitar_media, self.relleno, self.min_ciclos = m, refinar, quitar_media, relleno, min_ciclos
 
     def resolver(self, datos: Datos, gramatica: Gramatica, presupuesto: Presupuesto,
                  traza: Traza | None = None) -> Resultado:
@@ -44,9 +45,9 @@ class SolverEspectral:
         dt = ts[1] - ts[0]
         try:
             e = espectro(ys, dt, self.quitar_media, self.relleno, c)
-            ps = picos(e, self.m)
+            ps = picos(e, self.m, min_frecuencia=self.min_ciclos / (len(ys) * dt))
             if not ps:
-                detalle["motivo"] = "el espectro no tiene ningún máximo local"
+                detalle["motivo"] = f"el espectro no tiene ningún pico con al menos {self.min_ciclos:g} ciclos en la ventana"
                 return Resultado(None, math.inf, c.total, detalle)
             frecuencias = []
             for p in ps:

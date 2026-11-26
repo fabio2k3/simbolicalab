@@ -48,15 +48,18 @@ def espectro(ys: Sequence[float], dt: float, quitar_media: bool = True, relleno:
     return Espectro(tuple(k / (N * dt) for k in range(mitad + 1)), tuple(y[:mitad + 1]), N, dt)
 
 
-def picos(e: Espectro, cuantos: int = 1, umbral: float = 0.0) -> list[Pico]:
+def picos(e: Espectro, cuantos: int = 1, umbral: float = 0.0, min_frecuencia: float = 0.0) -> list[Pico]:
     if cuantos < 1:
         raise ValueError("cuantos debe ser al menos 1")
     mag = e.magnitudes
-    locales = [Pico(k, e.frecuencias[k], mag[k]) for k in range(1, len(mag) - 1) if mag[k - 1] < mag[k] >= mag[k + 1]]
+    locales = [Pico(k, e.frecuencias[k], mag[k]) for k in range(1, len(mag) - 1)
+               if mag[k - 1] < mag[k] >= mag[k + 1] and e.frecuencias[k] >= min_frecuencia * (1 - 1e-12)]
     locales.sort(key=lambda p: -p.magnitud)
     if not locales:
         return []
+    
     return [p for p in locales[:cuantos] if p.magnitud >= umbral * locales[0].magnitud]
+
 
 
 def refinar_jacobsen(e: Espectro, pico: Pico) -> float:
