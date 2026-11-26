@@ -8,7 +8,7 @@ from .media import SolverMedia
 from .dp import SolverDP
 
 
-def solvers_del_tema2(max_tam: int = 4, k_goloso: int = 2, m_frecuencias: int = 2, k_max: int = 5) -> dict:
+def solvers_por_tecnica(max_tam: int = 4, k_goloso: int = 2, m_frecuencias: int = 2, k_max: int = 5) -> dict:
     return {
         "media": SolverMedia(),
         "fuerza_bruta": SolverFuerzaBruta(max_tam),

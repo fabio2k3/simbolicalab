@@ -15,6 +15,8 @@ from .fourier import (dft, error_de_redondeo, es_potencia_de_dos, fft, fft_itera
 from .recurrencias import CasoMaestro, maestro, resolver, trabajo_por_nivel, verificar_maestro
 from .analisis_espectral import (Espectro, Pico, alias, error_de_ajuste, espectro, picos, refinar_jacobsen,
                                  refinar_por_ajuste, submuestrear)
+from .comparacion import Benchmark, Fila, benchmarks, comparar, error_en, ganadores
+from .seleccion_modelo import bic, eliminacion_hacia_atras, elegir_k, piso_de_error
 
 
 
@@ -31,5 +33,7 @@ __all__ = [
     "dft", "error_de_redondeo", "es_potencia_de_dos", "fft", "fft_iterativa", "ifft", "multiplicar_escolar", 
     "multiplicar_exacta", "multiplicar_fft", "multiplicar_karatsuba", "raiz", "siguiente_potencia_de_dos", 
     "CasoMaestro", "maestro", "resolver", "trabajo_por_nivel", "verificar_maestro", "Espectro", "Pico", 
-    "alias", "error_de_ajuste", "espectro", "picos", "refinar_jacobsen", "refinar_por_ajuste", "submuestrear", 
+    "alias", "error_de_ajuste", "espectro", "picos", "refinar_jacobsen", "refinar_por_ajuste", "submuestrear",
+    "Benchmark", "Fila", "benchmarks", "comparar", "error_en", "ganadores", "bic", "eliminacion_hacia_atras", 
+    "elegir_k", "piso_de_error", 
 ]
